@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'config/app_config.dart';
-import 'pages/home_page.dart';
 import 'pages/main_shell.dart';
 
 Future<void> main() async {
