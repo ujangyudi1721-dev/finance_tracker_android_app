@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'config/app_config.dart';
 import 'pages/home_page.dart';
+import 'pages/main_shell.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Finance Tracker',
       theme: ThemeData(colorSchemeSeed: Colors.teal, useMaterial3: true),
-      home: const HomePage(),
+      home: const MainShell(),
     );
   }
 }

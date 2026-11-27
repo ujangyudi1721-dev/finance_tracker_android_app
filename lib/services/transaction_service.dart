@@ -24,6 +24,31 @@ class TransactionService {
     return rows.map((row) => TransactionModel.fromMap(row)).toList();
   }
 
+    /// ALL transactions. Supabase gives a limited number of rows for each
+  /// request (usually 1000), so we ask page by page until nothing is left.
+  /// Without this, the totals would be wrong once you have many transactions.
+  static Future<List<TransactionModel>> getAllTransactions() async {
+    const pageSize = 1000;
+    final List<TransactionModel> all = [];
+    var from = 0;
+
+    while (true) {
+      final rows = await _db
+          .from('transactions')
+          .select()
+          .order('tanggal', ascending: false)
+          .order('id', ascending: false)
+          .range(from, from + pageSize - 1);
+
+      if (rows.isEmpty) break;
+
+      all.addAll(rows.map((row) => TransactionModel.fromMap(row)));
+      from += rows.length;
+    }
+
+    return all;
+  }
+
   /// The categories you used before (not transfer), most used first.
   static Future<List<String>> getCategories() async {
     final rows = await _db.from('transactions').select('kategori, tipe');
